@@ -6,7 +6,9 @@ from email.message import EmailMessage
 def check_website_status(url):
     try:
         response = requests.get(url, timeout=10)
-        if response.status_code != 200:
+        if response.status_code == 200:
+            send_email_notification(f"Website Up: {url} returned status code {response.status_code}")
+        else:
             send_email_notification(f"Website Down: {url} returned status code {response.status_code}")
     except requests.exceptions.RequestException as e:
         send_email_notification(f"Website Down: {url} is unreachable. Error: {e}")
@@ -35,4 +37,4 @@ def send_email_notification(subject):
     except Exception as e:
         print(f"Error sending email: {e}")
 
-check_website_status("https://www.example.com")
+check_website_status("https://www.weitzman.info")

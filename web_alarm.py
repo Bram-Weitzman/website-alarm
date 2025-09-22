@@ -29,7 +29,8 @@ def send_email_notification(subject):
     msg['To'] = receiver_email
 
     try:
-        server = smtplib.SMTP_SSL('smtp.gmail.com', 465)
+        server = smtplib.SMTP('smtp.office365.com', 587)
+        server.starttls()
         server.login(sender_email, password)
         server.send_message(msg)
         server.quit()
@@ -37,4 +38,9 @@ def send_email_notification(subject):
     except Exception as e:
         print(f"Error sending email: {e}")
 
-check_website_status("https://www.weitzman.info")
+# This line now gets the URL from the environment variable
+website_to_check = os.environ.get("WEBSITE_URL")
+if website_to_check:
+    check_website_status(website_to_check)
+else:
+    print("WEBSITE_URL environment variable is not set.")

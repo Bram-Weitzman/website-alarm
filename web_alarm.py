@@ -10,7 +10,7 @@ def check_website_status(url):
     """
     try:
         # Use a timeout to prevent the script from hanging indefinitely
-        response = requests.get(url, timeout=10)
+        response = requests.get(url, timeout=10, verify=false)
         
         # Check for a successful status code (e.g., 200 OK)
         if response.status_code >= 200 and response.status_code < 300:
